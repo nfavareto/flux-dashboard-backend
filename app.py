@@ -334,7 +334,4 @@ def upload_form():
 
 @app.get("/")
 def root():
-    return JSONResponse({"servicio": "Flux Dashboard backend", "endpoints": [
-        "/upload (panel de carga)", "/dashboard (tablero actualizado)",
-        "/api/upload/telefonia", "/api/upload/s1", "/api/upload/s1-eventos",
-        "/api/upload/presentismo", "/api/upload/encuesta", "/api/estado"]})
+    return HTMLResponse(_read_html())
