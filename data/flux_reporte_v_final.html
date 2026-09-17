@@ -168,6 +168,8 @@ b{font-weight:500;color:#1a1a19}
 <div id="loginOverlay" style="position:fixed;inset:0;background:#f0efe9;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px"><div style="background:#fff;border:1px solid #d3d1c7;border-radius:16px;padding:32px 28px;width:100%;max-width:480px;box-shadow:0 4px 24px rgba(0,0,0,.08)"><div style="font-size:24px;font-weight:700;margin-bottom:4px">Fl<em style="color:#4F6FF5;font-style:normal">u</em>x</div><div style="font-size:12px;color:#888780;margin-bottom:18px">Somos Flux</div><div id="loginClock" style="font-size:30px;font-weight:300;color:#1a1a19;margin-bottom:4px">--:--:--</div><div id="loginDate" style="font-size:12px;color:#888780;margin-bottom:22px"></div><div style="font-size:10px;font-weight:700;color:#888780;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Selecciona tu nombre para ingresar</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button onclick="loginDirect('aguadalupe')" style="background:#f1efe8;border:1.5px solid #d3d1c7;border-radius:10px;padding:13px 12px;cursor:pointer;text-align:left;font-family:inherit"><div style="font-size:13px;font-weight:500;color:#1a1a19;margin-bottom:2px">Guadalupe Alarcon</div><div style="font-size:11px;color:#888780">Manana 09:00</div></button><button onclick="loginDirect('ageraldine')" style="background:#f1efe8;border:1.5px solid #d3d1c7;border-radius:10px;padding:13px 12px;cursor:pointer;text-align:left;font-family:inherit"><div style="font-size:13px;font-weight:500;color:#1a1a19;margin-bottom:2px">Geraldine Aguirre</div><div style="font-size:11px;color:#888780">Manana 09:00</div></button><button onclick="loginDirect('amelody')" style="background:#f1efe8;border:1.5px solid #d3d1c7;border-radius:10px;padding:13px 12px;cursor:pointer;text-align:left;font-family:inherit"><div style="font-size:13px;font-weight:500;color:#1a1a19;margin-bottom:2px">Melody Abele</div><div style="font-size:11px;color:#888780">Manana 09:00</div></button><button onclick="loginDirect('arocio')" style="background:#f1efe8;border:1.5px solid #d3d1c7;border-radius:10px;padding:13px 12px;cursor:pointer;text-align:left;font-family:inherit"><div style="font-size:13px;font-weight:500;color:#1a1a19;margin-bottom:2px">Rocio Arguello</div><div style="font-size:11px;color:#888780">Manana 09:00</div></button><button onclick="loginDirect('mmelina')" style="background:#f1efe8;border:1.5px solid #d3d1c7;border-radius:10px;padding:13px 12px;cursor:pointer;text-align:left;font-family:inherit"><div style="font-size:13px;font-weight:500;color:#1a1a19;margin-bottom:2px">Melina Meluendes</div><div style="font-size:11px;color:#888780">Tarde 13:30</div></button><button onclick="loginDirect('psabrina')" style="background:#f1efe8;border:1.5px solid #d3d1c7;border-radius:10px;padding:13px 12px;cursor:pointer;text-align:left;font-family:inherit"><div style="font-size:13px;font-weight:500;color:#1a1a19;margin-bottom:2px">Sabrina Papaiani</div><div style="font-size:11px;color:#888780">Tarde 13:30</div></button><button onclick="loginDirect('wbrian')" style="background:#f1efe8;border:1.5px solid #d3d1c7;border-radius:10px;padding:13px 12px;cursor:pointer;text-align:left;font-family:inherit"><div style="font-size:13px;font-weight:500;color:#1a1a19;margin-bottom:2px">Brian Williamson</div><div style="font-size:11px;color:#888780">Tarde 13:30</div></button><button onclick="loginDirect('supervisor')" style="background:#1a1a19;border:1.5px solid #1a1a19;border-radius:10px;padding:13px 12px;cursor:pointer;text-align:left;font-family:inherit"><div style="font-size:13px;font-weight:500;color:#fff;margin-bottom:2px">Supervisor</div><div style="font-size:11px;color:rgba(255,255,255,.6)">Acceso completo</div></button></div></div></div>
 <div id="userBar"><div><span class="ub-name" id="ubName"></span><span class="ub-time" id="ubTime" style="margin:0 12px;color:rgba(255,255,255,.6)"></span><span class="ub-status" id="ubStatus"></span></div><button id="btnImport" onclick="openImport()" style="display:none;background:#4F6FF5;border:none;color:#fff;border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;margin-right:8px">&#8593; Importar datos</button><button class="ub-logout" onclick="doLogout()">Cerrar sesion</button></div>
 
+<div id="metaBar" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 16px;background:#2E3A6E;color:#fff;font-size:13px;flex-wrap:wrap"><span>Datos actualizados al <b class="fAct">16/09/2026</b></span><button onclick="openObjetivos()" style="background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:7px;padding:5px 12px;font-size:12px;cursor:pointer">&#9881; Objetivos</button></div>
+<div id="objModal" style="display:none"></div>
 <div class="fb">
   <div class="fbg" id="grpMes"><span class="fblbl">Periodo</span>
     <select class="fsel" id="fMes" onchange="go()">
@@ -391,7 +393,7 @@ b{font-weight:500;color:#1a1a19}
   <div class="buls" id="buls"></div>
   <div id="aAlert"></div>
   <div class="four" id="telK"></div>
-  <div class="card gaugeCard"><div class="sl">Indicadores clave</div><div class="note" style="margin:2px 0 8px">Periodo disponible: Enero a Agosto 2026 (detalle diario de telefonia hasta Julio). Actualizado al preparar este reporte: 15/09/2026.</div><div class="gaugeRow" id="telGauges"><div id="gNsvc"></div><div id="gAbd"></div><div id="gRet"></div><div id="gConv"></div></div></div>
+  <div class="card gaugeCard"><div class="sl">Indicadores clave</div><div class="note" style="margin:2px 0 8px">Periodo disponible: Enero a Agosto 2026 (detalle diario de telefonia hasta Julio). Actualizado al preparar este reporte: <span class="fAct">16/09/2026</span>.</div><div class="gaugeRow" id="telGauges"><div id="gNsvc"></div><div id="gAbd"></div><div id="gRet"></div><div id="gConv"></div></div></div>
   <div class="card"><div class="sl">Dimensionamiento diario &mdash; <span id="dimTelMes"></span></div><div class="cw" style="height:340px"><canvas id="cDimTel"></canvas></div><div class="note dimNote" style="margin-top:6px">Barras = atendidas (gestionadas) &middot; linea oscura = IVR (llamadas ingresadas) &middot; linea verde = cola de atencion. Valores por dia.</div></div>
   <div class="card"><div class="sl">NPS de llamados &mdash; encuesta post-llamada</div><div class="note" style="margin:2px 0 8px">Indicadores de la encuesta telefonica del mes (cruce por id_gestion). El detalle completo esta en la solapa Encuestas.</div><div class="four" id="npsLlamK"></div></div>
   <div class="two">
@@ -509,7 +511,7 @@ b{font-weight:500;color:#1a1a19}
 
 <div class="sec" id="s-dir-s1">
   <div class="four" id="s1K"></div>
-  <div class="card"><div class="sl">Indicadores clave S1</div><div class="note" style="margin:2px 0 8px">Periodo disponible: Enero a Agosto 2026. Actualizado al preparar este reporte: 15/09/2026. Ver cobertura detallada en la tarjeta "SLA de S1" mas abajo.</div><div class="four" style="margin-top:6px"><div id="gS1Res"></div><div id="gS1Csat"></div><div id="gS1Resp"></div><div></div></div></div>
+  <div class="card"><div class="sl">Indicadores clave S1</div><div class="note" style="margin:2px 0 8px">Periodo disponible: Enero a Agosto 2026. Actualizado al preparar este reporte: <span class="fAct">16/09/2026</span>. Ver cobertura detallada en la tarjeta "SLA de S1" mas abajo.</div><div class="four" style="margin-top:6px"><div id="gS1Res"></div><div id="gS1Csat"></div><div id="gS1Resp"></div><div></div></div></div>
   <div class="card"><div class="sl">WhatsApp &mdash; entrante vs saliente (Contact Center)</div><div class="four" id="waCC" style="margin-top:6px"></div></div>
   <div class="card">
     <div class="sl">SLA de S1 &mdash; <span id="slaMes"></span></div>
@@ -757,7 +759,7 @@ b{font-weight:500;color:#1a1a19}
   <div class="four" id="cliTK"></div>
   <div class="two">
     <div class="card"><div class="sl">Embudo de atencion</div><div class="fun" id="cliFun"></div><div id="cliFunLeg" style="font-size:11px;color:#888780;text-align:center"></div></div>
-    <div class="card"><div class="sl">Seguimiento % de atencion</div><div class="note" style="margin:2px 0 8px">Periodo: Enero a Agosto 2026 &middot; Actualizado al 15/09/2026.</div><table class="tbl"><thead><tr><th>Mes</th><th class="tr">Llamadas</th><th class="tr">Atend.</th><th class="tr">% Atenc.</th><th class="tr">Objetivo*</th></tr></thead><tbody id="tbCliSLA"></tbody><tfoot><tr><td colspan="5">* Objetivo: en construccion &mdash; pendiente de validacion por Gerencia</td></tr></tfoot></table></div>
+    <div class="card"><div class="sl">Seguimiento % de atencion</div><div class="note" style="margin:2px 0 8px">Periodo: Enero a Agosto 2026 &middot; Actualizado al <span class="fAct">16/09/2026</span>.</div><table class="tbl"><thead><tr><th>Mes</th><th class="tr">Llamadas</th><th class="tr">Atend.</th><th class="tr">% Atenc.</th><th class="tr">Objetivo*</th></tr></thead><tbody id="tbCliSLA"></tbody><tfoot><tr><td colspan="5">* Objetivo: en construccion &mdash; pendiente de validacion por Gerencia</td></tr></tfoot></table></div>
   </div>
   <div class="two">
     <div class="card"><div class="sl">Motivos de contacto</div><div id="cliTipB"></div></div>
@@ -1233,20 +1235,69 @@ function gaugeColor(pct,invert){
   if(invert){if(pct>=40)return r;if(pct>=25)return a;return g;}
   if(pct>=80)return g;if(pct>=60)return a;return r;
 }
-function mkGauge(host,label,pct,invert,sub,neutral){
+/* ===== CONFIG CENTRAL: OBJETIVOS (variable unica editable) + FECHA ===== */
+var FECHA_ACT='16/09/2026';
+var OBJETIVOS_DEF={ns:null,abd:null,sla1a:null,ret:null,conv:null,csat:null,nps:null,tarde_max:5};
+var OBJ_META=[
+ {k:'ns',t:'% de atencion (telefonia)',u:'%',dir:'min'},
+ {k:'abd',t:'Abandono maximo (telefonia)',u:'%',dir:'max'},
+ {k:'sla1a',t:'SLA 1a respuesta S1 (<=180s)',u:'%',dir:'min'},
+ {k:'ret',t:'Retencion de bajas',u:'%',dir:'min'},
+ {k:'conv',t:'Conversion de ventas',u:'%',dir:'min'},
+ {k:'csat',t:'CSAT (encuesta)',u:'%',dir:'min'},
+ {k:'nps',t:'NPS (encuesta)',u:'',dir:'min'},
+ {k:'tarde_max',t:'Llegadas tarde para alertar (Operacion diaria)',u:'',dir:'max'}
+];
+var OBJETIVOS=(function(){var o={},k;for(k in OBJETIVOS_DEF)o[k]=OBJETIVOS_DEF[k];
+ try{var s=localStorage.getItem('flux_objetivos');if(s){var j=JSON.parse(s);for(k in j)if(k in o)o[k]=j[k];}}catch(e){}return o;})();
+function objVal(k){var v=OBJETIVOS[k];return (v===''||v==null||isNaN(v))?null:+v;}
+function objColor(k,val,dir){var o=objVal(k);if(o==null||val==null||isNaN(val))return null;var ok,warn;if(dir==='max'){ok=val<=o;warn=val<=o*1.15;}else{ok=val>=o;warn=val>=o*0.9;}return ok?'#1D9E75':(warn?'#E0A340':'#D6534E');}
+function buildOpThresh(){return {
+ ns_crit:(objVal('ns')!=null?Math.round(objVal('ns')*0.7):45),
+ ns_warn:(objVal('ns')!=null?objVal('ns'):65),
+ abd_crit:(objVal('abd')!=null?Math.round(objVal('abd')*1.6):40),
+ abd_warn:(objVal('abd')!=null?objVal('abd'):25),
+ sla_crit:(objVal('sla1a')!=null?Math.round(objVal('sla1a')*0.7):50),
+ sla_warn:(objVal('sla1a')!=null?objVal('sla1a'):70),
+ tarde_max:(objVal('tarde_max')!=null?objVal('tarde_max'):5)};}
+function openObjetivos(){
+ var h='<div style="position:fixed;inset:0;background:rgba(20,20,25,.55);z-index:10000;display:flex;align-items:center;justify-content:center;padding:18px" onclick="if(event.target===this)closeObjetivos()">'
+ +'<div style="background:#fff;border-radius:14px;max-width:580px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 10px 40px rgba(0,0,0,.25)">'
+ +'<div style="padding:18px 22px;border-bottom:1px solid #ececec"><div style="font-size:18px;font-weight:700;color:#2E3A6E">Objetivos del tablero</div>'
+ +'<div style="font-size:12px;color:#777;margin-top:3px">Defini una meta y todo el tablero se actualiza solo: el tacometro dibuja la marca del objetivo y se pinta verde / naranja / rojo segun el resultado, y las alertas de Operacion diaria usan estos valores. Si dejas un campo vacio (s/d), ese indicador queda neutro, sin semaforo, como esta hoy.</div></div>'
+ +'<div style="padding:14px 22px">';
+ OBJ_META.forEach(function(m){var v=(OBJETIVOS[m.k]==null?'':OBJETIVOS[m.k]);
+  h+='<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #f2f2f2">'
+   +'<div style="font-size:13px;color:#333">'+m.t+(m.dir==='max'?' <span style=\"color:#999;font-size:11px\">(techo)</span>':' <span style=\"color:#999;font-size:11px\">(piso)</span>')+'</div>'
+   +'<div style="white-space:nowrap"><input id="obj_'+m.k+'" type="number" step="any" value="'+v+'" placeholder="s/d" style="width:80px;padding:5px 7px;border:1px solid #ccc;border-radius:7px;font-size:13px;text-align:right"/> <span style="color:#999;font-size:12px">'+(m.u||'')+'</span></div></div>';});
+ h+='</div><div style="padding:14px 22px;border-top:1px solid #ececec;display:flex;justify-content:space-between;gap:10px">'
+ +'<button onclick="resetObjetivos()" style="background:#f3f3f3;border:1px solid #ddd;border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer;color:#666">Borrar todos</button>'
+ +'<div style="display:flex;gap:8px"><button onclick="closeObjetivos()" style="background:#fff;border:1px solid #ccc;border-radius:8px;padding:8px 16px;font-size:13px;cursor:pointer">Cancelar</button>'
+ +'<button onclick="saveObjetivos()" style="background:#4F6FF5;border:none;color:#fff;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer">Guardar</button></div></div></div></div>';
+ var m=document.getElementById('objModal');if(m){m.innerHTML=h;m.style.display='block';}}
+function closeObjetivos(){var m=document.getElementById('objModal');if(m){m.style.display='none';m.innerHTML='';}}
+function saveObjetivos(){OBJ_META.forEach(function(m){var el=document.getElementById('obj_'+m.k);if(!el)return;var raw=el.value;OBJETIVOS[m.k]=(raw===''||raw==null)?null:(isNaN(+raw)?null:+raw);});
+ try{localStorage.setItem('flux_objetivos',JSON.stringify(OBJETIVOS));}catch(e){}
+ OP_THRESH=buildOpThresh();closeObjetivos();try{if(typeof go==='function')go();}catch(e){}try{if(typeof renderOp==='function')renderOp();}catch(e){}}
+function resetObjetivos(){var k;for(k in OBJETIVOS_DEF)OBJETIVOS[k]=OBJETIVOS_DEF[k];try{localStorage.removeItem('flux_objetivos');}catch(e){}OP_THRESH=buildOpThresh();closeObjetivos();try{if(typeof go==='function')go();}catch(e){}try{if(typeof renderOp==='function')renderOp();}catch(e){}}
+/* ===== fin CONFIG CENTRAL ===== */
+function mkGauge(host,label,pct,invert,sub,neutral,objKey,objDir){
   var el=document.getElementById(host);if(!el)return;
   pct=Math.round(pct)||0;pct=Math.max(0,Math.min(100,pct));
-  var col=neutral?'#4F6FF5':gaugeColor(pct,invert);
+  var _oc=objKey?objColor(objKey,pct,objDir||(invert?'max':'min')):null;
+  var col=_oc?_oc:(neutral?'#4F6FF5':gaugeColor(pct,invert));
   var R=40,cx=50,cy=52,len=Math.PI*R,off=len*(1-pct/100);
   var path='M'+(cx-R)+','+cy+' A'+R+','+R+' 0 0 1 '+(cx+R)+','+cy;
+  var _ov=objKey?objVal(objKey):null,_tick='';
+  if(_ov!=null){var _th=(1-_ov/100)*Math.PI,_x1=(cx+(R-6)*Math.cos(_th)).toFixed(1),_y1=(cy-(R-6)*Math.sin(_th)).toFixed(1),_x2=(cx+(R+6)*Math.cos(_th)).toFixed(1),_y2=(cy-(R+6)*Math.sin(_th)).toFixed(1);_tick='<line x1="'+_x1+'" y1="'+_y1+'" x2="'+_x2+'" y2="'+_y2+'" stroke="#1a1a19" stroke-width="2"/>';}
   el.innerHTML='<div class="gauge"><svg viewBox="0 0 100 62" class="gsvg">'
     +'<path d="'+path+'" fill="none" stroke="#ece9df" stroke-width="9" stroke-linecap="round"/>'
-    +'<path d="'+path+'" fill="none" stroke="'+col+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+len+'" stroke-dashoffset="'+off+'"/>'
+    +'<path d="'+path+'" fill="none" stroke="'+col+'" stroke-width="9" stroke-linecap="round" stroke-dasharray="'+len+'" stroke-dashoffset="'+off+'"/>'+_tick
     +'<text x="10" y="61" class="gend">0</text>'
     +'<text x="90" y="61" class="gend" text-anchor="end">100</text>'
     +'<text x="50" y="45" class="gnum" text-anchor="middle" fill="'+col+'">'+pct+'%</text>'
     +(sub?'<text x="50" y="57" class="gsubt" text-anchor="middle">'+sub+'</text>':'')
-    +'</svg><div class="glbl">'+label+'</div></div>';
+    +'</svg><div class="glbl">'+label+(_ov!=null?'<span class="gobj" style="font-size:10px;color:#888780;font-weight:400"> &middot; obj '+_ov+'%</span>':'')+'</div></div>';
 }
 var RETVEN={"2026-01":{"ret":{"COMBO":{"eo":195,"en":49,"so":6,"sn":0},"INTERNET":{"eo":23,"en":15,"so":3,"sn":0},"TV":{"eo":17,"en":4,"so":0,"sn":0},"PACKS PREMIUM":{"eo":1,"en":2,"so":0,"sn":0},"BOCA ADICIONAL":{"eo":1,"en":0,"so":0,"sn":0}},"ven":{"COMBO":{"ev":16,"ep":43,"sv":0,"sp":0},"INTERNET":{"ev":13,"ep":15,"sv":1,"sp":1},"BOCA ADICIONAL":{"ev":8,"ep":0,"sv":0,"sp":0},"PACKS PREMIUM":{"ev":3,"ep":4,"sv":0,"sp":0},"TV":{"ev":4,"ep":5,"sv":0,"sp":0},"OTROS":{"ev":0,"ep":2,"sv":0,"sp":0}},"rl":{"Comodoro Rivadavia":{"eo":61,"en":17,"so":2,"sn":0},"Trelew":{"eo":50,"en":12,"so":1,"sn":0},"Puerto Madryn":{"eo":106,"en":29,"so":6,"sn":0},"Rawson":{"eo":19,"en":10,"so":0,"sn":0},"Gaiman":{"eo":0,"en":2,"so":0,"sn":0},"Sin dato":{"eo":1,"en":0,"so":0,"sn":0}},"vl":{"Puerto Madryn":{"ev":13,"ep":21,"sv":1,"sp":1},"Comodoro Rivadavia":{"ev":8,"ep":23,"sv":0,"sp":0},"Trelew":{"ev":13,"ep":13,"sv":0,"sp":0},"Rawson":{"ev":9,"ep":9,"sv":0,"sp":0},"Sin dato":{"ev":1,"ep":1,"sv":0,"sp":0},"Sc Caleta Olivia":{"ev":0,"ep":1,"sv":0,"sp":0},"Dolavon":{"ev":0,"ep":1,"sv":0,"sp":0}}},"2026-02":{"ret":{"COMBO":{"eo":212,"en":59,"so":5,"sn":0},"INTERNET":{"eo":33,"en":6,"so":1,"sn":0},"TV":{"eo":10,"en":6,"so":1,"sn":0},"PACKS PREMIUM":{"eo":0,"en":5,"so":0,"sn":0}},"ven":{"INTERNET":{"ev":14,"ep":23,"sv":0,"sp":0},"COMBO":{"ev":20,"ep":104,"sv":0,"sp":0},"TV":{"ev":6,"ep":7,"sv":0,"sp":0},"PACKS PREMIUM":{"ev":11,"ep":22,"sv":0,"sp":1},"BOCA ADICIONAL":{"ev":5,"ep":3,"sv":0,"sp":0},"OTROS":{"ev":0,"ep":1,"sv":0,"sp":0}},"rl":{"Sin dato":{"eo":1,"en":0,"so":0,"sn":0},"Puerto Madryn":{"eo":117,"en":29,"so":5,"sn":0},"Comodoro Rivadavia":{"eo":64,"en":20,"so":0,"sn":0},"Rawson":{"eo":16,"en":9,"so":0,"sn":0},"Gaiman":{"eo":2,"en":0,"so":1,"sn":0},"Trelew":{"eo":55,"en":15,"so":1,"sn":0},"Sc Pico Truncado":{"eo":0,"en":1,"so":0,"sn":0},"Sc Las Heras":{"eo":0,"en":2,"so":0,"sn":0}},"vl":{"Trelew":{"ev":10,"ep":40,"sv":0,"sp":0},"Comodoro Rivadavia":{"ev":15,"ep":54,"sv":0,"sp":0},"Puerto Madryn":{"ev":22,"ep":41,"sv":0,"sp":1},"Rawson":{"ev":7,"ep":17,"sv":0,"sp":0},"Sc Caleta Olivia":{"ev":0,"ep":2,"sv":0,"sp":0},"Sin dato":{"ev":1,"ep":5,"sv":0,"sp":0},"Sc Pico Truncado":{"ev":0,"ep":1,"sv":0,"sp":0},"Dolavon":{"ev":1,"ep":0,"sv":0,"sp":0}}},"2026-03":{"ret":{"COMBO":{"eo":220,"en":49,"so":0,"sn":0},"PACKS PREMIUM":{"eo":0,"en":2,"so":0,"sn":0},"TV":{"eo":12,"en":3,"so":0,"sn":0},"INTERNET":{"eo":35,"en":7,"so":0,"sn":0}},"ven":{"COMBO":{"ev":18,"ep":70,"sv":0,"sp":0},"TV":{"ev":1,"ep":8,"sv":0,"sp":0},"INTERNET":{"ev":14,"ep":11,"sv":0,"sp":0},"PACKS PREMIUM":{"ev":2,"ep":14,"sv":0,"sp":0},"BOCA ADICIONAL":{"ev":0,"ep":1,"sv":0,"sp":0},"OTROS":{"ev":0,"ep":2,"sv":0,"sp":0}},"rl":{"Puerto Madryn":{"eo":123,"en":26,"so":0,"sn":0},"Comodoro Rivadavia":{"eo":69,"en":20,"so":0,"sn":0},"Trelew":{"eo":55,"en":8,"so":0,"sn":0},"Gaiman":{"eo":5,"en":1,"so":0,"sn":0},"Rawson":{"eo":13,"en":5,"so":0,"sn":0},"Sin dato":{"eo":1,"en":0,"so":0,"sn":0},"Sc Pico Truncado":{"eo":1,"en":1,"so":0,"sn":0}},"vl":{"Comodoro Rivadavia":{"ev":12,"ep":40,"sv":0,"sp":0},"Rawson":{"ev":5,"ep":14,"sv":0,"sp":0},"Puerto Madryn":{"ev":11,"ep":22,"sv":0,"sp":0},"Trelew":{"ev":6,"ep":27,"sv":0,"sp":0},"Sc Las Heras":{"ev":0,"ep":1,"sv":0,"sp":0},"Dolavon":{"ev":0,"ep":1,"sv":0,"sp":0},"Gaiman":{"ev":1,"ep":0,"sv":0,"sp":0},"Sin dato":{"ev":0,"ep":1,"sv":0,"sp":0}}},"2026-04":{"ret":{"COMBO":{"eo":196,"en":48,"so":0,"sn":0},"INTERNET":{"eo":51,"en":15,"so":0,"sn":0},"TV":{"eo":22,"en":7,"so":0,"sn":0},"PACKS PREMIUM":{"eo":1,"en":2,"so":0,"sn":0}},"ven":{"INTERNET":{"ev":10,"ep":15,"sv":0,"sp":0},"COMBO":{"ev":9,"ep":91,"sv":0,"sp":0},"BOCA ADICIONAL":{"ev":4,"ep":3,"sv":0,"sp":0},"TV":{"ev":5,"ep":9,"sv":0,"sp":0},"PACKS PREMIUM":{"ev":4,"ep":14,"sv":0,"sp":0},"OTROS":{"ev":0,"ep":5,"sv":0,"sp":0}},"rl":{"Rawson":{"eo":9,"en":12,"so":0,"sn":0},"Comodoro Rivadavia":{"eo":59,"en":18,"so":0,"sn":0},"Gaiman":{"eo":2,"en":0,"so":0,"sn":0},"Puerto Madryn":{"eo":125,"en":21,"so":0,"sn":0},"Trelew":{"eo":74,"en":20,"so":0,"sn":0},"Sc Caleta Olivia":{"eo":0,"en":1,"so":0,"sn":0},"Dolavon":{"eo":1,"en":0,"so":0,"sn":0}},"vl":{"Trelew":{"ev":7,"ep":39,"sv":0,"sp":0},"Comodoro Rivadavia":{"ev":12,"ep":51,"sv":0,"sp":0},"Puerto Madryn":{"ev":8,"ep":33,"sv":0,"sp":0},"Dolavon":{"ev":1,"ep":0,"sv":0,"sp":0},"Sc Pico Truncado":{"ev":0,"ep":3,"sv":0,"sp":0},"Sc Caleta Olivia":{"ev":0,"ep":1,"sv":0,"sp":0},"Gaiman":{"ev":1,"ep":0,"sv":0,"sp":0},"Rawson":{"ev":3,"ep":8,"sv":0,"sp":0},"Sin dato":{"ev":0,"ep":2,"sv":0,"sp":0}}},"2026-05":{"ret":{"INTERNET":{"eo":62,"en":12,"so":0,"sn":0},"TV":{"eo":26,"en":9,"so":0,"sn":0},"COMBO":{"eo":273,"en":42,"so":0,"sn":0},"PACKS PREMIUM":{"eo":1,"en":2,"so":0,"sn":0}},"ven":{"COMBO":{"ev":12,"ep":80,"sv":0,"sp":0},"INTERNET":{"ev":10,"ep":11,"sv":0,"sp":0},"TV":{"ev":6,"ep":9,"sv":0,"sp":0},"BOCA ADICIONAL":{"ev":6,"ep":3,"sv":0,"sp":0},"PACKS PREMIUM":{"ev":4,"ep":7,"sv":0,"sp":0}},"rl":{"Puerto Madryn":{"eo":177,"en":21,"so":0,"sn":0},"Sin dato":{"eo":1,"en":0,"so":0,"sn":0},"Trelew":{"eo":52,"en":16,"so":0,"sn":0},"Comodoro Rivadavia":{"eo":73,"en":14,"so":0,"sn":0},"Rawson":{"eo":55,"en":13,"so":0,"sn":0},"Gaiman":{"eo":1,"en":1,"so":0,"sn":0},"Dolavon":{"eo":3,"en":0,"so":0,"sn":0}},"vl":{"Comodoro Rivadavia":{"ev":7,"ep":55,"sv":0,"sp":0},"Trelew":{"ev":12,"ep":21,"sv":0,"sp":0},"Rawson":{"ev":5,"ep":10,"sv":0,"sp":0},"Puerto Madryn":{"ev":14,"ep":23,"sv":0,"sp":0},"Gaiman":{"ev":0,"ep":1,"sv":0,"sp":0}}},"2026-06":{"ret":{"INTERNET":{"eo":31,"en":5,"so":0,"sn":0},"COMBO":{"eo":219,"en":50,"so":0,"sn":0},"TV":{"eo":7,"en":4,"so":0,"sn":0},"PACKS PREMIUM":{"eo":1,"en":2,"so":0,"sn":0},"FLUX MAS":{"eo":0,"en":1,"so":0,"sn":0},"BOCA ADICIONAL":{"eo":2,"en":0,"so":0,"sn":0}},"ven":{"INTERNET":{"ev":16,"ep":10,"sv":0,"sp":0},"COMBO":{"ev":20,"ep":86,"sv":0,"sp":0},"TV":{"ev":12,"ep":12,"sv":0,"sp":0},"BOCA ADICIONAL":{"ev":13,"ep":2,"sv":0,"sp":0},"PACKS PREMIUM":{"ev":0,"ep":1,"sv":0,"sp":0},"OTROS":{"ev":0,"ep":1,"sv":0,"sp":0}},"rl":{"Puerto Madryn":{"eo":95,"en":21,"so":0,"sn":0},"Trelew":{"eo":56,"en":16,"so":0,"sn":0},"Comodoro Rivadavia":{"eo":50,"en":15,"so":0,"sn":0},"Rawson":{"eo":56,"en":10,"so":0,"sn":0},"Gaiman":{"eo":3,"en":0,"so":0,"sn":0}},"vl":{"Comodoro Rivadavia":{"ev":12,"ep":49,"sv":0,"sp":0},"Puerto Madryn":{"ev":28,"ep":26,"sv":0,"sp":0},"Rawson":{"ev":10,"ep":9,"sv":0,"sp":0},"Trelew":{"ev":10,"ep":23,"sv":0,"sp":0},"Sin dato":{"ev":1,"ep":1,"sv":0,"sp":0},"Sc Pico Truncado":{"ev":0,"ep":2,"sv":0,"sp":0},"Sc Caleta Olivia":{"ev":0,"ep":2,"sv":0,"sp":0}}},"2026-07":{"ret":{"COMBO":{"eo":290,"en":63,"so":9,"sn":1},"TV":{"eo":24,"en":13,"so":1,"sn":0},"INTERNET":{"eo":45,"en":13,"so":3,"sn":0},"PACKS PREMIUM":{"eo":0,"en":2,"so":0,"sn":0}},"ven":{"COMBO":{"ev":24,"ep":105,"sv":1,"sp":1},"INTERNET":{"ev":8,"ep":15,"sv":0,"sp":0},"PACKS PREMIUM":{"ev":0,"ep":10,"sv":0,"sp":0},"BOCA ADICIONAL":{"ev":10,"ep":1,"sv":0,"sp":0},"TV":{"ev":4,"ep":1,"sv":0,"sp":0}},"rl":{"Puerto Madryn":{"eo":149,"en":31,"so":7,"sn":0},"Rawson":{"eo":36,"en":13,"so":2,"sn":0},"Trelew":{"eo":88,"en":23,"so":2,"sn":0},"Comodoro Rivadavia":{"eo":83,"en":22,"so":1,"sn":1},"Sin dato":{"eo":1,"en":2,"so":0,"sn":0},"Gaiman":{"eo":2,"en":0,"so":0,"sn":0},"Dolavon":{"eo":0,"en":0,"so":1,"sn":0}},"vl":{"Trelew":{"ev":16,"ep":27,"sv":0,"sp":0},"Puerto Madryn":{"ev":8,"ep":25,"sv":0,"sp":1},"Rawson":{"ev":5,"ep":15,"sv":0,"sp":0},"Comodoro Rivadavia":{"ev":16,"ep":55,"sv":0,"sp":0},"Sin dato":{"ev":0,"ep":6,"sv":1,"sp":0},"Sc Caleta Olivia":{"ev":0,"ep":1,"sv":0,"sp":0},"Sc Pico Truncado":{"ev":1,"ep":0,"sv":0,"sp":0},"Sc Calafate":{"ev":0,"ep":2,"sv":0,"sp":0},"Sc Las Heras":{"ev":0,"ep":1,"sv":0,"sp":0}}}};
 var RETVEN_PRODS=['COMBO','INTERNET','TV','BOCA ADICIONAL','PACKS PREMIUM','FLUX MAS','OTROS'];
@@ -1269,9 +1320,9 @@ function renderRetVen(){
     '<div class="kpi '+(efe>=80?'kg':'ka')+'"><div class="kl">Efectividad retencion</div><div class="kv">'+efe+'%</div><div class="ks">'+fN(ret_no)+' no retenidos</div></div>'+
     '<div class="kpi kb"><div class="kl">Ventas efectivas</div><div class="kv">'+fN(ven_ok)+'</div><div class="ks">ent '+fN(v.ev)+' - sal '+fN(v.sv)+'</div></div>'+
     '<div class="kpi kn"><div class="kl">Prospectos</div><div class="kv">'+fN(pros)+'</div><div class="ks">conversion '+conv+'%</div></div>');
-  mkGauge('rvgEfe','Efectividad retencion',efe,false,fN(ret_ok)+' de '+fN(ret_tot));
+  mkGauge('rvgEfe','Efectividad retencion',efe,false,fN(ret_ok)+' de '+fN(ret_tot),false,'ret','min');
   mkGauge('rvgApo','Aporte saliente',apo,false,fN(r.so)+' vs '+fN(r.eo)+' ent');
-  mkGauge('rvgConv','Conversion ventas',conv,false,fN(ven_ok)+' OT');
+  mkGauge('rvgConv','Conversion ventas',conv,false,fN(ven_ok)+' OT',false,'conv','min');
   var d=RETVEN[mk]||{ret:{},ven:{}};
   var rrows='',rlabels=[],re=[],rs=[];
   RETVEN_PRODS.forEach(function(p){var x=d.ret[p];if(!x)return;var tot=(x.eo||0)+(x.so||0);
@@ -1467,7 +1518,7 @@ function renderS1Extra(){
   var _pa=s1PeriodAgg();var _pr=_pa.r;var _rpct=_pr.recib?Math.round(_pr.resuel/_pr.recib*100):(c?c.res_pct:0);
   mkGauge('gS1Res','Resolucion',_rpct,false,(_pa.per?fN(_pr.resuel)+' de '+fN(_pr.recib)+' ('+_pa.label+')':(c?fN(c.res)+' resueltos':'sin datos')));
   var _mtag=_pa.per?' (mes)':'';
-  if(e){mkGauge('gS1Csat','Conformidad (CSAT)',e.csat,false,fN(e.n2)+' respondidos'+_mtag);mkGauge('gS1Resp','Recomendacion (NPS)',Math.max(0,e.nps),false,'NPS '+e.nps+' &middot; '+fN(e.n3)+' respondidos'+_mtag);}
+  if(e){mkGauge('gS1Csat','Conformidad (CSAT)',e.csat,false,fN(e.n2)+' respondidos'+_mtag,false,'csat','min');mkGauge('gS1Resp','Recomendacion (NPS)',Math.max(0,e.nps),false,'NPS '+e.nps+' &middot; '+fN(e.n3)+' respondidos'+_mtag,false,'nps','min');}
   else{mkGauge('gS1Csat','Conformidad (CSAT)',0,false,'sin datos');mkGauge('gS1Resp','Recomendacion (NPS)',0,false,'sin datos');}
   var el=document.getElementById('cDimS1');if(!el)return;
   setTxt('dimS1Mes',(MESES[curMes]||'').replace('*','')+' 2026');
@@ -1548,7 +1599,7 @@ function renderWA(host,d){
         '<div style="width:'+pin+'%;background:#3B8C6E"></div><div style="width:'+pout+'%;background:#E0A340"></div></div>'+
       '<div class="ks" style="margin-top:6px"><span style="color:#3B8C6E">&#9632; entrante '+pin+'%</span> &nbsp;&nbsp; <span style="color:#B8860B">&#9632; saliente '+pout+'%</span> &middot; total WhatsApp '+fN(t)+'</div></div>');
 }
-var OP_THRESH={ns_crit:45,ns_warn:65,abd_crit:40,abd_warn:25,sla_crit:50,sla_warn:70,tarde_max:5};
+var OP_THRESH=buildOpThresh();
 var OP_TASKS={manana:[
  {h:'09:00',t:'Control de dotacion presente vs turno asignado (ausencias/tardanzas)'},
  {h:'09:15',t:'Verificar apertura de campana y sistemas operativos'},
@@ -1686,10 +1737,10 @@ function renderTel(){
     '<div class="kpi kn"><div class="kl">Gestionadas</div><div class="kv">'+fN(d.gest)+'</div><div class="ks">de '+fN(d.cola)+' en cola</div></div>'+
     '<div class="kpi kn"><div class="kl">TMO promedio</div><div class="kv">'+fS(d.tmo)+'</div><div class="ks">IVR '+fS(d.ivr_avg)+' ACD '+fS(d.acd_avg)+'</div></div>');
 
-  mkGauge('gNsvc','% de atencion',d.nsvc,false,fN(d.gest)+' gestionadas',true);
-  mkGauge('gAbd','Abandono',d.abd_pct,true,fN(d.abd)+' llamadas');
-  mkGauge('gRet','Retencion de bajas',rp,false,fN(d.ret_ok)+' de '+fN(d.ret_tot));
-  mkGauge('gConv','Conversion ventas',conv,false,d.ven_ap+' OT');
+  mkGauge('gNsvc','% de atencion',d.nsvc,false,fN(d.gest)+' gestionadas',true,'ns','min');
+  mkGauge('gAbd','Abandono',d.abd_pct,true,fN(d.abd)+' llamadas',false,'abd','max');
+  mkGauge('gRet','Retencion de bajas',rp,false,fN(d.ret_ok)+' de '+fN(d.ret_tot),false,'ret','min');
+  mkGauge('gConv','Conversion ventas',conv,false,d.ven_ap+' OT',false,'conv','min');
   mkFunnel('funnel',d.ivr,d.cola,d.gest,'funLeg');
 
   var tip=curTip==='all'?d.tips:d.tips.filter(function(t){return t.c===curTip;});
@@ -2420,10 +2471,10 @@ function renderTelGran(pd){
     var _ab=(d.abd_pct!=null)?d.abd_pct:(d.ivr?Math.round((d.ivr-d.gest)/d.ivr*1000)/10:0);
     var _rp=d.ret_tot?Math.round(d.ret_ok/d.ret_tot*100):0;
     var _cvBase=(mRef&&((mRef.ven_ap||0)+(mRef.ven_pr||0)))?Math.round(mRef.ven_ap/((mRef.ven_ap||0)+(mRef.ven_pr||0))*100):0;
-    mkGauge('gNsvc','% de atencion',d.nsvc||0,false,fN(d.gest)+' gestionadas',true);
-    mkGauge('gAbd','Abandono',_ab,true,fN(d.aband!=null?d.aband:(d.ivr-d.gest))+' llamadas');
-    mkGauge('gRet','Retencion de bajas',_rp,false,(d.ret_tot?fN(d.ret_ok)+' de '+fN(d.ret_tot):'sin bajas en el periodo'));
-    mkGauge('gConv','Conversion ventas',_cvBase,false,(isMes?(mRef.ven_ap+' OT'):(mRef.ven_ap+' OT (mes)')));
+    mkGauge('gNsvc','% de atencion',d.nsvc||0,false,fN(d.gest)+' gestionadas',true,'ns','min');
+    mkGauge('gAbd','Abandono',_ab,true,fN(d.aband!=null?d.aband:(d.ivr-d.gest))+' llamadas',false,'abd','max');
+    mkGauge('gRet','Retencion de bajas',_rp,false,(d.ret_tot?fN(d.ret_ok)+' de '+fN(d.ret_tot):'sin bajas en el periodo'),false,'ret','min');
+    mkGauge('gConv','Conversion ventas',_cvBase,false,(isMes?(mRef.ven_ap+' OT'):(mRef.ven_ap+' OT (mes)')),false,'conv','min');
   }catch(e){}
   try{renderNpsLlam();}catch(e){}
 
@@ -3224,5 +3275,6 @@ window.onload=function(){
 };
 
 </script>
+<script>try{document.querySelectorAll('.fAct').forEach(function(e){e.textContent=FECHA_ACT;});}catch(e){}</script>
 </body>
 </html>

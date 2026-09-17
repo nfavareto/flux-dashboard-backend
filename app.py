@@ -323,7 +323,7 @@ def estado():
 def dashboard(session: str = None):
     sess = _get_session(session)
     html = _read_html()
-    filtered = filter_dashboard_for_role(html, sess['rol'], operador_user_key=sess.get('user_key'))
+    filtered = filter_dashboard_for_role(html, sess['rol'], operador_user_key=sess.get('user_key'), user_label=sess.get('email'))
     return HTMLResponse(filtered)
 
 

@@ -20,6 +20,9 @@ Roles:
                  no le corresponde ver de otros agentes).
 """
 import re
+import datetime
+import urllib.parse
+import html as _htmlmod
 
 from .common import find_var_json, set_var_json
 
@@ -95,12 +98,12 @@ def _filter_login_data_operador(html: str, user_key: str) -> str:
     return html
 
 
-def filter_dashboard_for_role(html: str, rol: str, operador_user_key: str = None) -> str:
+def filter_dashboard_for_role(html: str, rol: str, operador_user_key: str = None, user_label: str = None) -> str:
     """Devuelve una copia del HTML apta para el rol dado.
     IMPORTANTE: esto opera sobre las variables embebidas, no solo sobre
     el markup visible — lo que se quita, se quita de verdad."""
     if rol in FULL_ACCESS:
-        return html
+        return _inject_watermark(html, user_label)  # admin/supervisor: sin filtro, solo marca de agua
 
     if rol in ('cliente', 'comercial'):
         html = _empty_presentismo(html)
@@ -117,6 +120,8 @@ def filter_dashboard_for_role(html: str, rol: str, operador_user_key: str = None
         html = _hide_button(html, btn_id)
 
     html = _inject_role_bootstrap(html, rol)
+    html = _inject_hardening(html)          # bloqueos anti-copia/inspeccion
+    html = _inject_watermark(html, user_label)  # marca de agua por usuario
     return html
 
 
@@ -146,6 +151,61 @@ def _inject_role_bootstrap(html: str, rol: str) -> str:
     }}
   }});
 }})();
+</script>
+</body>"""
+    return html.replace('</body>', script, 1)
+
+
+def _watermark_uri(user_label: str) -> str:
+    """Genera un patron SVG (data URI) con el identificador del usuario, tenue y
+    en diagonal, para tileado como marca de agua. Sirve para trazar una filtracion."""
+    hoy = datetime.datetime.now().strftime('%d/%m/%Y %H:%M')
+    etiqueta = (user_label or 'sesion') + '  -  ' + hoy
+    etiqueta = _htmlmod.escape(etiqueta)
+    svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="330" height="188">'
+           '<text x="14" y="120" transform="rotate(-27 165 94)" '
+           'font-family="Arial,Helvetica,sans-serif" font-size="14" '
+           'fill="#3a3a52" fill-opacity="0.22">' + etiqueta + '</text></svg>')
+    return 'data:image/svg+xml,' + urllib.parse.quote(svg)
+
+
+def _inject_watermark(html: str, user_label: str) -> str:
+    """Overlay fijo, no interactivo, con la marca de agua tileada. Para TODOS los
+    roles (incluido admin), porque su valor es la trazabilidad."""
+    uri = _watermark_uri(user_label)
+    overlay = ('<div id="wmk" aria-hidden="true" style="position:fixed;inset:0;'
+               'z-index:99998;pointer-events:none;background-image:url(' + uri + ');'
+               'background-repeat:repeat"></div>\n</body>')
+    return html.replace('</body>', overlay, 1)
+
+
+def _inject_hardening(html: str) -> str:
+    """Deterrentes de codigo para roles no-admin: ocultar Exportar/Objetivos,
+    bloquear clic derecho, atajos de devtools y seleccion de texto, y cerrar la
+    sesion por inactividad. No es seguridad absoluta (nada impide una captura de
+    pantalla); sube la vara y complementa a Cloudflare Access."""
+    script = """
+<script>
+(function(){
+  try{
+    window.openObjetivos=function(){};
+    window.addEventListener('load',function(){
+      document.querySelectorAll('button,a').forEach(function(b){
+        var t=((b.textContent||'')+' '+((b.getAttribute&&b.getAttribute('onclick'))||''));
+        if(/Exportar|Objetivos|openObjetivos/i.test(t)) b.style.display='none';
+      });
+    });
+    document.addEventListener('contextmenu',function(e){e.preventDefault();});
+    document.addEventListener('keydown',function(e){
+      var k=(e.key||'').toUpperCase();
+      if(k==='F12'||(e.ctrlKey&&e.shiftKey&&(k==='I'||k==='J'||k==='C'))||(e.ctrlKey&&k==='U')){e.preventDefault();return false;}
+    });
+    var de=document.documentElement; de.style.webkitUserSelect='none'; de.style.userSelect='none';
+    var _t; function _r(){clearTimeout(_t); _t=setTimeout(function(){try{location.href='/login';}catch(e){}}, 20*60*1000);}
+    ['click','keydown','mousemove','scroll','touchstart'].forEach(function(ev){document.addEventListener(ev,_r,{passive:true});});
+    _r();
+  }catch(e){}
+})();
 </script>
 </body>"""
     return html.replace('</body>', script, 1)

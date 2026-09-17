@@ -1,0 +1,107 @@
+{
+  "_nota": "Lista confirmada por Nico (16/09/2026) desde el Excel de usuarios. Paula (paulap@sinarg.com.ar) = supervisor CONFIRMADO. Roles supervisor/admin ven TODO sin filtro.",
+  "usuarios": [
+    {
+      "email": "operaciones@contactco.com.ar",
+      "nombre": "Nicolas Favareto",
+      "rol": "admin",
+      "user_key": null
+    },
+    {
+      "email": "tairali@contactco.com.ar",
+      "nombre": "Temis Airali",
+      "rol": "admin",
+      "user_key": null
+    },
+    {
+      "email": "lmanrique@contactco.com.ar",
+      "nombre": "Leonela Manrique",
+      "rol": "supervisor",
+      "user_key": null
+    },
+    {
+      "email": "wcampagna@contactco.com.ar",
+      "nombre": "Walter Campagna",
+      "rol": "supervisor",
+      "user_key": null
+    },
+    {
+      "email": "paulap@sinarg.com.ar",
+      "nombre": "Paula (SINARG)",
+      "rol": "supervisor",
+      "user_key": null
+    },
+    {
+      "email": "comercial@contactco.com.ar",
+      "nombre": "Gaston Tanus",
+      "rol": "comercial",
+      "user_key": null
+    },
+    {
+      "email": "maxiplaza80@gmail.com",
+      "nombre": "Maxi Plaza",
+      "rol": "comercial",
+      "user_key": null
+    },
+    {
+      "email": "jm@sinarg.com.ar",
+      "nombre": "JM (SINARG)",
+      "rol": "comercial",
+      "user_key": null
+    },
+    {
+      "email": "castineira.rocioconsultora@gmail.com",
+      "nombre": "Rocio Castineira",
+      "rol": "cliente",
+      "user_key": null
+    },
+    {
+      "email": "laura@somosflux.com",
+      "nombre": "Laura Torrego",
+      "rol": "cliente",
+      "user_key": null
+    },
+    {
+      "email": "martin@somosflux.com",
+      "nombre": "Martin (Somos Flux)",
+      "rol": "cliente",
+      "user_key": null
+    },
+    {
+      "email": "gualarcon49@gmail.com",
+      "nombre": "Guadalupe Alarcon",
+      "rol": "operador",
+      "user_key": "aguadalupe"
+    },
+    {
+      "email": "volandoletrasgm@gmail.com",
+      "nombre": "Rocio Arguello",
+      "rol": "operador",
+      "user_key": "arocio"
+    },
+    {
+      "email": "gaia.producc@gmail.com",
+      "nombre": "Geraldine Aguirre",
+      "rol": "operador",
+      "user_key": "ageraldine"
+    },
+    {
+      "email": "brian.williamson.777@gmail.com",
+      "nombre": "Brian Williamson",
+      "rol": "operador",
+      "user_key": "wbrian"
+    },
+    {
+      "email": "melodyfabele@gmail.com",
+      "nombre": "Melody Abele",
+      "rol": "operador",
+      "user_key": "amelody"
+    },
+    {
+      "email": "melinamaluendes@gmail.com",
+      "nombre": "Melina Meluendes",
+      "rol": "operador",
+      "user_key": "mmelina"
+    }
+  ]
+}
