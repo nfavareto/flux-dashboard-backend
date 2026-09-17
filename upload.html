@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Flux — Importar datos</title>
+<style>
+  body{font-family:system-ui,Arial,sans-serif;background:#f4f3ee;margin:0;padding:24px;color:#222}
+  .wrap{max-width:900px;margin:0 auto}
+  h1{color:#1F4E79}
+  .card{background:#fff;border-radius:8px;padding:18px 20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  .card h2{margin:0 0 10px;font-size:15px;color:#2E5E8C;text-transform:uppercase;letter-spacing:.03em}
+  label{display:block;font-size:12px;color:#666;margin:10px 0 4px}
+  input[type=text],input[type=month],select{width:100%;padding:7px 9px;border:1px solid #ddd;border-radius:5px;font-size:14px;box-sizing:border-box}
+  input[type=file]{font-size:13px}
+  button{margin-top:14px;background:#1F4E79;color:#fff;border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:14px}
+  button:hover{background:#2E5E8C}
+  .msg{margin-top:10px;font-size:13px;padding:8px 10px;border-radius:5px;display:none;white-space:pre-wrap}
+  .msg.ok{background:#EAF3DE;color:#3B6D11;display:block}
+  .msg.err{background:#FCEBEB;color:#A32D2D;display:block}
+  .top{display:flex;justify-content:space-between;align-items:center}
+  a.dlink{color:#1F4E79;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <h1>Importar datos — Flux</h1>
+    <a class="dlink" href="/dashboard" target="_blank">Abrir el tablero &rarr;</a>
+  </div>
+  <p style="color:#666;font-size:13px">Solo el perfil <b>Supervisor</b> puede importar datos. Subi los reportes del mes que corresponda; el tablero se actualiza al instante.</p>
+
+  <div class="card">
+    <h2>Telefonia</h2>
+    <form onsubmit="return doUpload(event,'telefonia',['ivr','llamadas'])">
+      <label>Mes</label><input type="month" name="mes" required>
+      <label>Reporte IVR (.xlsx)</label><input type="file" name="ivr" accept=".xlsx" required>
+      <label>Reporte Llamadas (.csv)</label><input type="file" name="llamadas" accept=".csv" required>
+      <button type="submit">Cargar telefonia</button>
+      <div class="msg"></div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>S1 Digital (casos)</h2>
+    <form onsubmit="return doUpload(event,'s1',['case_details'])">
+      <label>Mes</label><input type="month" name="mes" required>
+      <label>case_details (.xlsx)</label><input type="file" name="case_details" accept=".xlsx" required>
+      <button type="submit">Cargar S1</button>
+      <div class="msg"></div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>S1 — SLA de 1&ordf; respuesta e interacciones</h2>
+    <p style="font-size:12px;color:#888">Requiere el dump a nivel evento (con columna <code>sa</code>) + el mismo case_details del mes.</p>
+    <form onsubmit="return doUpload(event,'s1-eventos',['case_details','eventos'])">
+      <label>Mes</label><input type="month" name="mes" required>
+      <label>case_details (.xlsx)</label><input type="file" name="case_details" accept=".xlsx" required>
+      <label>Dump nivel evento (.xlsx)</label><input type="file" name="eventos" accept=".xlsx" required>
+      <button type="submit">Cargar SLA / interacciones</button>
+      <div class="msg"></div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Presentismo</h2>
+    <form onsubmit="return doUpload(event,'presentismo',['reporte_usuarios','grilla_turnos'],['grilla_turnos'])">
+      <label>Mes</label><input type="month" name="mes" required>
+      <label>Reporte de usuarios (.xlsx)</label><input type="file" name="reporte_usuarios" accept=".xlsx" required>
+      <label>Grilla de turnos (.xlsx) — opcional si ya se cargo antes</label><input type="file" name="grilla_turnos" accept=".xlsx">
+      <button type="submit">Cargar presentismo</button>
+      <div class="msg"></div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Encuesta post-llamada</h2>
+    <form onsubmit="return doUpload(event,'encuesta',['ivr_encuesta','gestiones'])">
+      <label>Mes</label><input type="month" name="mes" required>
+      <label>IVR-Encuesta (.xlsx)</label><input type="file" name="ivr_encuesta" accept=".xlsx" required>
+      <label>Reporte Gestiones (.xlsx)</label><input type="file" name="gestiones" accept=".xlsx" required>
+      <button type="submit">Cargar encuesta</button>
+      <div class="msg"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+async function doUpload(ev, tipo, fields, optional){
+  ev.preventDefault();
+  optional = optional || [];
+  var form = ev.target;
+  var msg = form.querySelector('.msg');
+  var mes = form.mes.value; // yyyy-mm del input type=month
+  var fd = new FormData();
+  fd.append('mes', mes);
+  fd.append('rol', 'supervisor');
+  for (var i=0;i<fields.length;i++){
+    var f = fields[i];
+    var input = form.querySelector('[name="'+f+'"]');
+    if (input.files.length) fd.append(f, input.files[0]);
+    else if (optional.indexOf(f)===-1){ msg.className='msg err'; msg.textContent='Falta el archivo: '+f; return false; }
+  }
+  msg.className='msg'; msg.textContent='Procesando...'; msg.style.display='block';
+  try{
+    var res = await fetch('/api/upload/'+tipo, {method:'POST', body: fd});
+    var data = await res.json();
+    if (res.ok){
+      msg.className='msg ok';
+      msg.textContent='OK — '+JSON.stringify(data.resumen, null, 2);
+    } else {
+      msg.className='msg err';
+      msg.textContent='Error: '+(data.detail || res.statusText);
+    }
+  } catch(e){
+    msg.className='msg err'; msg.textContent='Error de red: '+e.message;
+  }
+  return false;
+}
+</script>
+</body>
+</html>

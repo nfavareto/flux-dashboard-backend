@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Flux — Ingresar</title>
+<style>
+  body{font-family:system-ui,Arial,sans-serif;background:#f4f3ee;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+  .box{background:#fff;padding:32px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);width:320px}
+  h1{font-size:20px;color:#1F4E79;margin:0 0 18px}
+  input{width:100%;padding:9px 10px;border:1px solid #ddd;border-radius:6px;font-size:14px;box-sizing:border-box;margin-bottom:12px}
+  button{width:100%;background:#1F4E79;color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer;font-size:14px}
+  .msg{margin-top:10px;font-size:13px;color:#A32D2D;display:none}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>Dashboard Flux</h1>
+  <form onsubmit="return doLogin(event)">
+    <input type="email" id="email" placeholder="tu-mail@empresa.com" required>
+    <button type="submit">Ingresar</button>
+    <div class="msg" id="msg"></div>
+  </form>
+</div>
+<script>
+async function doLogin(ev){
+  ev.preventDefault();
+  var email = document.getElementById('email').value;
+  var msg = document.getElementById('msg');
+  var fd = new FormData(); fd.append('email', email);
+  try{
+    var res = await fetch('/api/login', {method:'POST', body: fd});
+    var data = await res.json();
+    if (res.ok){ window.location.href = data.dashboard_url; }
+    else { msg.style.display='block'; msg.textContent = data.detail || 'Error'; }
+  }catch(e){ msg.style.display='block'; msg.textContent = 'Error de red'; }
+  return false;
+}
+</script>
+</body>
+</html>
