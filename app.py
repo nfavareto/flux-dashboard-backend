@@ -331,6 +331,50 @@ def dashboard(session: str = None):
 def upload_form():
     return HTMLResponse(open(os.path.join(BASE, 'templates', 'upload.html'), encoding='utf-8').read())
 
+@app.post("/api/simular")
+async def simular(request: Request):
+    """
+    Endpoint de simulación — cliente/comercial puede "what-if" cambios de KPIs.
+    Calcula impacto sin guardar en BD.
+    Filtrado por rol — solo usuario puede ver su simulación.
+    """
+    try:
+        body = await request.json()
+    except Exception:
+        return JSONResponse({"error": "Invalid JSON"}, status_code=400)
+    
+    # Auth
+    session = _get_session(body.get('session', ''))
+    if not session:
+        return JSONResponse({"error": "No session"}, status_code=401)
+    
+    user = USUARIOS.get(session)
+    if not user:
+        return JSONResponse({"error": "Invalid session"}, status_code=401)
+    
+    # Permisos
+    if user['rol'] not in ['admin', 'supervisor', 'comercial', 'cliente']:
+        return JSONResponse({"error": "No permission to simulate"}, status_code=403)
+    
+    # Import simulador
+    from pipeline.simulador import simular_completo
+    
+    # Cambios solicitados
+    telefonica = body.get('telefonica', {})
+    s1 = body.get('s1', {})
+    presentismo = body.get('presentismo', {})
+    
+    # Simular
+    resultado = simular_completo(
+        telefonia_override=telefonica,
+        s1_override=s1,
+        presentismo_override=presentismo
+    )
+    
+    # Log (no guardar, solo registrar en logs)
+    print(f"[SIMULACION] {user['email']} simuló cambios: tel={telefonica}, s1={s1}, pres={presentismo}")
+    
+    return JSONResponse(resultado)
 
 @app.get("/")
 def root():
