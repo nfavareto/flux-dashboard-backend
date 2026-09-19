@@ -35,6 +35,7 @@ HIDE_BUTTONS_BY_ROL = {
     'cliente': ['btnPre', 'btnOp'],
     'comercial': ['btnPre', 'btnOp'],
     'operador': ['btnPre', 'btnOp'],
+    'supervisor_flux': ['btnOp'],  # No ve Operación Diaria (alertas/accionables)
 }
 
 # Con que canal arranca cada rol al entrar (Cliente/Comercial entran directo
