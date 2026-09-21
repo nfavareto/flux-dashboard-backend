@@ -331,6 +331,9 @@ def dashboard(session: str = None):
 def upload_form():
     return HTMLResponse(open(os.path.join(BASE, 'templates', 'upload.html'), encoding='utf-8').read())
 
+import datetime
+   from auth import verify_password, create_token, verify_token, log_login, log_logout, get_audit_report
+
 @app.post("/api/simular")
 async def simular(request: Request):
     """
