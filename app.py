@@ -102,19 +102,26 @@ def _require_supervisor(rol: str):
 
 # ------------------------------------------------------------- Autenticacion
 @app.post("/api/login")
-def login(email: str = Form(...)):
-    """v1: identifica por mail (sin password) — el candado real, cuando se
-    despliegue, lo pone Cloudflare Access delante de este endpoint.
-    Devuelve un token de sesion + el rol, para armar el link /dashboard?session=..."""
-    email = email.strip().lower()
+async def login(request: Request):
+    """Login con email + password. Valida contra credentials.json (SHA256),
+    genera un JWT (8 hs) y registra el login en el audit log (SQLite).
+    Mantiene _sessions para que /dashboard?session=<token> siga funcionando."""
+    body = await request.json()
+    email = (body.get("email") or "").strip().lower()
+    password = body.get("password") or ""
     user = next((u for u in _usuarios() if u['email'].lower() == email), None)
     if not user:
         raise HTTPException(status_code=404, detail="Mail no registrado. Pedile al admin que te agregue.")
-    token = secrets.token_urlsafe(24)
+    if not verify_password(email, password):
+        raise HTTPException(status_code=401, detail="Contrasena incorrecta.")
+    token = create_token(email)
+    ip = request.client.host if request.client else None
+    ua = request.headers.get("user-agent")
+    log_login(email, token, ip, ua)
     _sessions[token] = {"email": user['email'], "nombre": user['nombre'],
-                         "rol": user['rol'], "user_key": user.get('user_key')}
-    return {"ok": True, "session": token, "nombre": user['nombre'], "rol": user['rol'],
-            "dashboard_url": f"/dashboard?session={token}"}
+                        "rol": user['rol'], "user_key": user.get('user_key')}
+    return {"ok": True, "session": token, "token": token, "nombre": user['nombre'],
+            "rol": user['rol'], "dashboard_url": f"/dashboard?session={token}", "exp": 28800}
 
 
 @app.get("/login", response_class=HTMLResponse)
